@@ -1,61 +1,62 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import axios from "axios";
 
-export default class CreateApp extends Component {
+class CreateAcc extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      email: "",
-      password: ""
+      firstName: '',
+      lastName: '',
     };
+
+
+    this.handleFirstnameChange = this.handleFirstnameChange.bind(this);
+    this.handleLastnameChange = this.handleLastnameChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+  handleFirstnameChange(event) {
+    this.setState({ firstName: event.target.value });
   }
 
-  /*handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
+  handleLastnameChange(event) {
+    this.setState({ lastName: event.target.value });
   }
 
-  handleSubmit = event => {
+
+  handleSubmit(event) {
+    const registrationData={firstName:this.state.firstName ,lastName: this.state.lastName};
+    axios.post('/user', registrationData)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+     });
+    alert('A name was submitted: ' + JSON.stringify(registrationData));
+    //to cancel form default behaviour
     event.preventDefault();
-  }*/
+  }
 
   render() {
     return (
-      <div className="Login">
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel><br/><br/>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup><br/>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel><br/><br/>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup><br/>
-          <Button
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-          >
-            Login
-          </Button>
-        </form>
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          FItrst Name:
+          <input
+           name="firstName" type="text" value={this.state.firstName} onChange={this.handleFirstnameChange} />
+        </label>
+        <label>
+          LastName:
+          <input
+           name="lastName" type="text" value={this.state.lastName} onChange={this.handleLastnameChange} />
+        </label>
+
+        <input type="submit" value="Submit" />
+      </form>
     );
   }
 }
+
+export default CreateAcc;

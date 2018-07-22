@@ -27,11 +27,20 @@ body {
   
 }
 
+.imgside{
+  padding-left: 110%;
+  
+}
 .main {
   
   height: 100vh;
 }
 
+.img{
+
+  width:20%;
+  height:50px;
+}
 .search {
  
   border-radius: 3px;
@@ -51,4 +60,6 @@ body {
   margin-top: 20%;
   width:40%;
 }
+
+
 
